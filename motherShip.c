@@ -57,9 +57,9 @@ main(int argc, char *argv[]) {
         //get the length of the data part of the PBF from the length defining part, store it into "len"
         do {
             tempLen = 0;
-            BitFileGetBitsInt(bitfile, &tempLen, 3, sizeof(len));
+            BitFileGetBitsInt(bitfile, &tempLen, 2, sizeof(len));
             len += tempLen;
-        } while (tempLen == 7);
+        } while (tempLen == 3);
         
         //get the stored data from the data part
         for (int i = 0; i < len; i++) {

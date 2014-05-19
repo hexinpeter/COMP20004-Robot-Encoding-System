@@ -117,8 +117,8 @@ RETURN: the total number of bits of the Peter's Binary Form
 */
 int intToPBF(int input, char *output, int outputLimit) {
     if (input == 0) {
-        sprintf(output, "000");
-        return 3;
+        sprintf(output, "00");
+        return 2;
     }
     
     unsigned bin, counter;
@@ -156,31 +156,26 @@ PARAMETERS: len - the length of data part
 RETURN: the number of characters stored
 */
 int storeLen(int len, char *output) {
-    int parts = len/7 + 1, remainder, i, counter = 0;
+    int parts = len/3 + 1, remainder, i, counter = 0;
     
     //except the last 3-bits part, all the other parts should be "111"
     for (i = parts; i > 1; i--) {
-        sprintf(output, "111");
-        counter += 3;
+        sprintf(output, "11");
+        counter += 2;
     }
     
     //now the last 3-bits part
-    remainder = len % 7;
+    remainder = len % 3;
     remainder = intToBin(remainder);
     
     if ( 0 <= remainder && remainder < 10) {
-        sprintf(output+counter, "00");
-        counter += 2;
-        sprintf(output+counter, "%d", remainder);
-        counter += 1;
-    } else if ( 10 <= remainder && remainder < 100) {
         sprintf(output+counter, "0");
         counter += 1;
         sprintf(output+counter, "%d", remainder);
-        counter += 2;
-    } else if ( 100 <= remainder && remainder < 1000){
+        counter += 1;
+    } else if ( 10 <= remainder && remainder < 100) {
         sprintf(output+counter, "%d", remainder);
-        counter += 3;
+        counter += 2;
     } else {
         fprintf(stderr, "error occurs in storeLen funciton, remainder = %d", remainder);
         EXIT_FAILURE;
