@@ -1,0 +1,6 @@
+for i in 1 2 3 4 6
+do
+	rm plotter$i.txt
+	./plotter sonar$i.txt > plotter$i.txt
+	./coder sonar$i.txt actual$i.txt plotter$i.txt
+done
